@@ -21,7 +21,7 @@ species(lentiginosus).
 species(exilis).
 species(herodias).
 species(alba).
-species(thulaegretta).
+species(thula).
 species(caerulea).
 species(tricolor).
 species(rufescens).
@@ -34,74 +34,97 @@ species(falcinellus).
 species(chihi).
 species(ajaja).
 
-% common names
-pelecanus(pelican).
-erythrorhynchos(americanWhitePelican).
-occidentalis(brownPelican).
-botaurus(bittern).
-lentiginosus(americanBittern).
-ixobrychus(bitern).
-exilis(leastBittern).
-ardea(heron).
-herodias(greatBlueHeron).
-alba(greatEgret).
-egretta(heron, egret). /*maybe split these 2 up?*/
-thulaegretta(snowyEgret).
-caerulea(littleBlueHeron).
-tricolor(tricoloredHeron).
-rufescens(reddishEgret).
-bubulcus(egret).
-ibis(cattleEgret).
-butorides(heron).
-virescens(greenHeron).
-nycticorax(nightHeron).
-nycticorax(blackCrownedNightHeron).
-nyctanassa(nightHeron).
-violacea(yellowCrownedNightHeron).
-eudocimus(ibis).
-albus(whiteIbis).
-plegadis(ibis).
-falcinellus(glossyIbis).
-chihi(whiteFacedIbis).
-platalea(spoonbill).
-ajaja(roseateSpoonbill).
+%common names
+commonName(pelecanus, pelican).
+commonName(erythrorhynchos, americanWhitePelican).
+commonName(occidentalis, brownPelican).
+commonName(botaurus, bittern).
+commonName(lentiginosus, americanBittern).
+commonName(ixobrychus, bittern).
+commonName(exilis, leastBittern).
+commonName(ardea, heron).
+commonName(herodias, greatBlueHeron).
+commonName(alba, greatEgret).
+commonName(egretta, heron).
+commonName(egretta, egret).
+commonName(thula, snowyEgret).
+commonName(caerulea, littleBlueHeron).
+commonName(tricolor, tricoloredHeron).
+commonName(rufescens, reddishEgret).
+commonName(bubulcus, egret).
+commonName(ibis, cattleEgret).
+commonName(butorides, heron).
+commonName(virescens, greenHeron).
+commonName(nycticorax, nightHeron).
+commonName(nycticorax, blackCrownedNightHeron).
+commonName(nyctanassa, nightHeron).
+commonName(violacea, yellowCrownedNightHeron).
+commonName(eudocimus, ibis).
+commonName(albus, whiteIbis).
+commonName(plegadis, ibis).
+commonName(falcinellus, glossyIbis).
+commonName(chihi, whiteFacedIbis).
+commonName(platalea, spoonbill).
+commonName(ajaja, roseateSpoonbill).
 
+%definitions
+%order(_) :- pelecaniformes. 
 
-order(A).
+%family(A).
 
-family(A).
+%genus(A).
 
-genus(A).
+%species(A).
 
-species(A).
+hasParent(A,B) :-
+    order(B),
+    family(A);
+    order(B),
+    genus(A);
+    order(B),
+    species(A);
+    family(B),
+    genus(A);
+    family(B),
+    species(A);
+    genus(B),
+    species(A).
 
-hasParent(A, B).
+hasCommonName(N,C) :-
+    commonName(N,_) = C.
 
-hasCommonName(N, C).
+hasCommonName(G,S,C) :-
+    commonName(G,S) = C.
 
-hasCommonName(?G, ?S, ?C).
+%hasSciName(?C,?N).
 
-hasSciName(?C, ?N).
+compoundName(G, S) :-
+    genus(G),
+    species(S),
+    append(G, "_", buffer),
+    append(buffer, S, buffer),
+    buffer.
 
-hasCompoundName(?G, ?S, ?N).
+hasCompoundName(G, S, N) :-
+    compoundName(G, S) = N.
 
-isaStrict(?A, ?B).
+%isaStrict(?A, ?B).
 
-isa(?A, ?B).
+%isa(?A, ?B).
 
-synonym(?A, ?B).
+%synonym(?A, ?B).
 
-countSpecies(?A, -N).
+%countSpecies(?A, -N).
 
-rangesTo(?A, ?P).
+%rangesTo(?A, ?P).
 
-habitat(?A, ?B).
+%habitat(?A, ?B).
 
-food(?A, ?B).
+%food(?A, ?B).
 
-nesting(?A, ?B).
+%nesting(?A, ?B).
 
-behavior(?A, ?B).
+%behavior(?A, ?B).
 
-conservation(?A, ?B).
+%conservation(?A, ?B).
 

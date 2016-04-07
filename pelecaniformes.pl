@@ -75,7 +75,7 @@ parent(plegadis, falcinellus).
 parent(plegadis, chihi).
 parent(platalea, ajaja).
 
-%common names
+%common_names
 commonName(pelecanus, pelican).
 commonName(erythrorhynchos, americanWhitePelican).
 commonName(occidentalis, brownPelican).
@@ -108,7 +108,7 @@ commonName(chihi, whiteFacedIbis).
 commonName(platalea, spoonbill).
 commonName(ajaja, roseateSpoonbill).
 
-%compound names
+%compound_names
 compoundName(pelecanus, erythrorhynchos, pelecanus_erythrorhynchos).
 compoundName(pelecanus, occidentalis, pelecanus_occidentalis).
 compoundName(botaurus, lentiginosus, botaurus_lentiginosus).
@@ -127,6 +127,26 @@ compoundName(eudocimus, albus, eudocimus_albus).
 compoundName(plegadis, falcinellus, plegadis_falcinellus).
 compoundName(plegadis, chihi, plegadis_chihi).
 compoundName(platalea, ajaja, platalea_ajaja).
+
+%status
+status(pelecanus_erythrorhynchos, lc).
+status(pelecanus_occidentalis, lc).
+status(botaurus_lentiginosus, lc).
+status(ixobrychus_exilis, lc).
+status(ardea_herodias, lc).
+status(ardea_alba, lc).
+status(egretta_thula, lc).
+status(egretta_caerulea, lc).
+status(egretta_tricolor, lc).
+status(egretta_rufescens, nt).
+status(bubulcus_ibis, lc).
+status(butorides_virescens, lc).
+status(nycticorax_nycticorax, lc).
+status(nyctanassa_violacea, lc).
+status(eudocimus_albus, lc).
+status(plegadis_falcinellus, lc).
+status(plegadis_chihi, lc).
+status(platalea_ajaja, lc).
 
 %definitions
 hasParent(A, B) :-
@@ -149,9 +169,8 @@ hasCompoundName(G, S, N) :-
     compoundName(G, S, N).
 
 isaStrict(A, B) :-
-    hasParent(A, B);
-    hasParent(C, A),
-    hasParent(B, C).
+    hasParent(B, A);
+    hasParent(A, B).
 
 %isa(?A, ?B).
 
@@ -172,5 +191,10 @@ synonym(A,B) :-
 
 %behavior(?A, ?B).
 
-%conservation(?A, ?B).
+conservation(A, B) :-
+    status(A, B);
+    hasCompoundName(A, S, C),
+    status(C, B);
+    hasCompoundName(G, A, C),
+    status(C, B).
 

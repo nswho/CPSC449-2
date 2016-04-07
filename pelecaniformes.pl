@@ -1,8 +1,12 @@
-%groups
+%order
 order(pelecaniformes).
+
+%family
 family(pelecanidae).
 family(ardeidae).
 family(threskiornithdae).
+
+%genus
 genus(pelecanus).
 genus(botaurus).
 genus(ixobrychus).
@@ -15,6 +19,8 @@ genus(nyctanassa).
 genus(eudocimus).
 genus(plegadis).
 genus(platalea).
+
+%species
 species(erythrorhynchos).
 species(occidentalis).
 species(lentiginosus).
@@ -33,6 +39,41 @@ species(albus).
 species(falcinellus).
 species(chihi).
 species(ajaja).
+
+%parent
+parent(pelecaniformes, pelecanidae).
+parent(pelecaniformes, ardeidae).
+parent(pelecaniformes, threskiornithdae).
+parent(pelecanidae, pelecanus).
+parent(ardeidae, botaurus).
+parent(ardeidae, ixobrychus).
+parent(ardeidae, ardea).
+parent(ardeidae, egretta).
+parent(ardeidae, bubulcus).
+parent(ardeidae, butorides).
+parent(ardeidae, nycticorax).
+parent(ardeidae, nyctanassa).
+parent(threskiornithdae, eudocimus).
+parent(threskiornithdae, plegadis).
+parent(threskiornithdae, platalea).
+parent(pelecanus, erythrorhynchos).
+parent(pelecanus, occidentalis).
+parent(botaurus, lentiginosus).
+parent(ixobrychus, exilis).
+parent(ardea, herodias).
+parent(ardea, alba).
+parent(egretta, thula).
+parent(egretta, caerulea).
+parent(egretta, tricolor).
+parent(egretta, rufescens).
+parent(bubulcus, ibis).
+parent(butorides, virescens).
+parent(nycticorax, nycticorax).
+parent(nyctanassa, violacea).
+parent(eudocimus, albus).
+parent(plegadis, falcinellus).
+parent(plegadis, chihi).
+parent(platalea, ajaja).
 
 %common names
 commonName(pelecanus, pelican).
@@ -88,27 +129,12 @@ compoundName(plegadis, chihi, plegadis_chihi).
 compoundName(platalea, ajaja, platalea_ajaja).
 
 %definitions
-%order(A). 
-
-%family(A).
-
-%genus(A).
-
-%species(A).
-
 hasParent(A, B) :-
-    order(B), family(A);
-    order(B), genus(A);
-    order(B), species(A);
-    family(B), genus(A);
-    family(B), species(A);
-    genus(B), species(A);
-    hasCompoundName(G, S, A), hasParent(G, B);
-    hasCompoundName(G, S, A), hasParent(S, B).
+    parent(B, A).
 
 hasCommonName(N, C) :-
-    commonName(N, C);
-    hasCompoundName(G, S, N), commonName(S, C).
+    hasCompoundName(G, S, N), commonName(S, C);
+    commonName(N, C).
 
 hasCommonName(G, S, C) :-
     hasParent(S, G), commonName(S, B), B = C.
@@ -122,7 +148,10 @@ hasSciName(C, N) :-
 hasCompoundName(G, S, N) :-
     compoundName(G, S, N).
 
-%isaStrict(?A, ?B).
+isaStrict(A, B) :-
+    hasParent(A, B);
+    hasParent(C, A),
+    hasParent(B, C).
 
 %isa(?A, ?B).
 

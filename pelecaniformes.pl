@@ -157,7 +157,7 @@ hasCommonName(N, C) :-
     commonName(N, C).
 
 hasCommonName(G, S, C) :-
-    hasParent(S, G), commonName(S, B), B = C.
+    hasParent(S, G), commonName(S, C).
 
 hasSciName(C, N) :-
     order(N), hasCommonName(N, C);
